@@ -51,32 +51,8 @@ This document includes:
 
 ## Troubleshooting
 
-Listing below are the common issues while running the project:
-- If the phone stops transmitting data, you will see “OFF” instead of the data transmitting after clicking Activate. In this case, go to WearOS on your phone, please unpair the watch, and pair both the phone and the watch again. Make sure you uninstall the app on your phone and watch both before repairing.
-- If you can not see the watch in Android Studio, turn off the ADB debugging and turn it on again.
+Listing below the common issues while running the project:
+- If the phone stops transmitting data, you will see “OFF” instead of the data transmitting after clicking Activate. In this case go to WearOS in phone, please unpair the watch, and pair both phone and watch again. Make sure you uninstall the app in phone and watch both before repairing.
+- If you can not see the watch in android studio turn off the ADB debugging and turn it on again.
 - When you are tracking the prediction values in the log in Android Studio. 
-- Sometimes the prediction value can go high. Typically, it should be between 0 and 1. If it is increasing over time, that means the model has not been loaded properly. Try to do it again from the beginning and run it again on your phone.
-
-## 📚 Citation
-
-If you use or reference this system in your work, please cite the following paper:
-
-Ngu, A. H., Yasmin, A., Mahmud, T., Mahmood, A., & Sheng, Q. Z. (2024).  
-**Demo: P-Fall: Personalization Pipeline for Fall Detection**.  
-*Proceedings of the 8th ACM/IEEE International Conference on Connected Health: Applications, Systems and Engineering Technologies (CHASE '23)*, pp. 173–174.  
-[https://doi.org/10.1145/3580252.3589412](https://doi.org/10.1145/3580252.3589412)
-
-```
-@inproceedings{10.1145/3580252.3589412,
-  author    = {Ngu, Anne H. and Yasmin, Awatif and Mahmud, Tarek and Mahmood, Adnan and Sheng, Quan Z.},
-  title     = {Demo: P-Fall: Personalization Pipeline for Fall Detection},
-  booktitle = {Proceedings of the 8th ACM/IEEE International Conference on Connected Health: Applications, Systems and Engineering Technologies},
-  year      = {2024},
-  pages     = {173--174},
-  publisher = {Association for Computing Machinery},
-  location  = {Orlando, FL, USA},
-  doi       = {10.1145/3580252.3589412},
-  url       = {https://doi.org/10.1145/3580252.3589412},
-  keywords  = {fall detection, personalization of ML models, edge computing}
-}
-```
+- Sometimes the prediction value can go high. Usually, it should be from 0-1. If it is increasing over time that means the model has not been loaded properly. Try to do it again from the beginning and run again in phone.
