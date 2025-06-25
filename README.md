@@ -10,16 +10,16 @@
 
 ## 📚 Table of Contents
 
-- [Overview](#overview)
-- [Prerequisites](#prerequisites)
-- [SmartFall Ecosystem](#smartfall-ecosystem)
-- [Offline Data Storage](#offline-data-storage)
-- [Adding a New Sensor](#adding-a-new-sensor)
-- [Replacing or Updating the Machine Learning Model](#replacing-or-updating-the-machine-learning-model)
-- [Troubleshooting](#troubleshooting)
+- [Overview](#-overview)
+- [Prerequisites](#-prerequisites)
+- [SmartFall Ecosystem](#-smartfall-ecosystem)
+- [Offline Data Storage](#-offline-data-storage)
+- [Adding a New Sensor](#-adding-a-new-sensor)
+- [Replacing or Updating the Machine Learning Model](#-replacing-or-updating-the-machine-learning-model)
+- [Troubleshooting](#-troubleshooting)
 - [Citation](#-citation)
 
-## 🚀 [Overview](#overview)
+## 🚀 [Overview](#-overview)
 
 **SmartFall** is a dual-component Android application built for **real-time fall detection**, user labeling, and data logging using wearable IMU sensors and on-device machine learning.
 
@@ -37,14 +37,14 @@ It comprises two main components:
 
 This modular setup enables accurate, on-device fall detection with options for general or personalized models and dynamic data labeling.
 
-## 🔧 [Prerequisites](#prerequisites)
+## 🔧 [Prerequisites](#-prerequisites)
 
 - **Java Development Kit (JDK)**: Version **18** or later  
 - **Android Studio**: Version **Giraffe (2022.3.1)** or later  
 - **WearOS-compatible smartwatch** and **Android phone** with ADB access enabled
 
 
-## ⚙️ [SmartFall Ecosystem](#smartfall-ecosystem)
+## ⚙️ [SmartFall Ecosystem](#-smartfall-ecosystem)
 
 A detailed technical description of the SmartFall system architecture can be found in the following PDF:
 
@@ -60,7 +60,7 @@ This document includes:
 > 💡 Use this document as a reference for deploying, configuring, and maintaining SmartFall across devices and sessions.
 
 
-## 🗃️ [Offline Data Storage](#offline-data-storage)
+## 🗃️ [Offline Data Storage](#-offline-data-storage)
 
 If Couchbase is not configured or the server is unreachable, SmartFall stores sensor and label data locally on the watch as JSON files. These files are saved in the internal app storage or external directory (e.g., `/sdcard/SmartFall/`). You can retrieve them using ADB:
 
@@ -75,7 +75,7 @@ adb shell run-as com.example.smartfallwatch cat files/<filename>.json > output.j
 ```
 Each file contains timestamped IMU data, predictions, confidence scores, and user labels for offline analysis.
 
-## 🧪 [Adding a New Sensor](#adding-a-new-sensor)
+## 🧪 [Adding a New Sensor](#-adding-a-new-sensor)
 
 If your fall detection model is trained to accept **two separate input tensors** (e.g., one for accelerometer, one for gyroscope), follow these steps to integrate it into the SmartFall app:
 
@@ -123,7 +123,7 @@ If your fall detection model is trained to accept **two separate input tensors**
 
 > ⚠️ Make sure to retrain or validate the model with your dual-sensor data structure before converting it into a `.tflite` format and deploying it.
 
-## 🔁 [Replacing or Updating the Machine Learning Model](#replacing-or-updating-the-machine-learning-model)
+## 🔁 [Replacing or Updating the Machine Learning Model](#-replacing-or-updating-the-machine-learning-model)
 
 To update the machine learning model used by SmartFall, follow these steps:
 
@@ -142,7 +142,7 @@ To update the machine learning model used by SmartFall, follow these steps:
 
 > ✅ No Java code modification is needed beyond changing the filename in the config.
 
-## [Troubleshooting](#troubleshooting)
+## [Troubleshooting](#-troubleshooting)
 
 Listing below are the common issues while running the project:
 - If the phone stops transmitting data, you will see “OFF” instead of the data transmitting after clicking Activate. In this case, go to WearOS on the smartphone, please unpair the watch, and pair both the phone and watch again. Make sure you uninstall the app on your phone and watch both before repairing.
