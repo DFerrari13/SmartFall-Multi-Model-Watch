@@ -12,10 +12,10 @@
 
 - [Overview](#overview)
 - [Prerequisites](#prerequisites)
-- [SmartFall Ecosystem](#smartFall-ecosystem)
-- [Offline Data Storage](#Offline-Data-Storage)
-- [Adding a New Sensor](#Adding-a-New-Sensor)
-- [Replacing or Updating the Machine Learning Model](#Replacing-or-Updating-the-Machine-Learning-Model)
+- [SmartFall Ecosystem](#smartfall-ecosystem)
+- [Offline Data Storage](#offline-data-storage)
+- [Adding a New Sensor](#adding-a-new-sensor)
+- [Replacing or Updating the Machine Learning Model](#replacing-or-updating-the-machine-learning-model)
 - [Troubleshooting](#troubleshooting)
 - [Citation](#citation)
 
@@ -44,7 +44,7 @@ This modular setup enables accurate, on-device fall detection with options for g
 - **WearOS-compatible smartwatch** and **Android phone** with ADB access enabled
 
 
-## ⚙️ [SmartFall Ecosystem](#smartFall-ecosystem)
+## ⚙️ [SmartFall Ecosystem](#smartfall-ecosystem)
 
 A detailed technical description of the SmartFall system architecture can be found in the following PDF:
 
@@ -60,7 +60,7 @@ This document includes:
 > 💡 Use this document as a reference for deploying, configuring, and maintaining SmartFall across devices and sessions.
 
 
-## 🗃️ [Offline Data Storage](#Offline-Data-Storage)
+## 🗃️ [Offline Data Storage](#offline-data-storage)
 
 If Couchbase is not configured or the server is unreachable, SmartFall stores sensor and label data locally on the watch as JSON files. These files are saved in the internal app storage or external directory (e.g., `/sdcard/SmartFall/`). You can retrieve them using ADB:
 
@@ -75,7 +75,7 @@ adb shell run-as com.example.smartfallwatch cat files/<filename>.json > output.j
 ```
 Each file contains timestamped IMU data, predictions, confidence scores, and user labels for offline analysis.
 
-## 🧪 [Adding a New Sensor](#Adding-a-New-Sensor)
+## 🧪 [Adding a New Sensor](#adding-a-new-sensor)
 
 If your fall detection model is trained to accept **two separate input tensors** (e.g., one for accelerometer, one for gyroscope), follow these steps to integrate it into the SmartFall app:
 
@@ -123,7 +123,7 @@ If your fall detection model is trained to accept **two separate input tensors**
 
 > ⚠️ Make sure to retrain or validate the model with your dual-sensor data structure before converting it into a `.tflite` format and deploying it.
 
-## 🔁 [Replacing or Updating the Machine Learning Model](#Replacing-or-Updating-the-Machine-Learning-Model)
+## 🔁 [Replacing or Updating the Machine Learning Model](#replacing-or-updating-the-machine-learning-model)
 
 To update the machine learning model used by SmartFall, follow these steps:
 
