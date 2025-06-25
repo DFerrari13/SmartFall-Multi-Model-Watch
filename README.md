@@ -16,7 +16,7 @@
 - [Offline Data Storage](#-offline-data-storage)
 - [Adding a New Sensor](#-adding-a-new-sensor)
 - [Replacing or Updating the Machine Learning Model](#-replacing-or-updating-the-machine-learning-model)
-- [Troubleshooting](#-troubleshootingabc)
+- [Troubleshooting](#troubleshootingabc)
 - [Citation](#-citation)
 
 ## 🚀 [Overview](#-overview)
@@ -142,7 +142,8 @@ To update the machine learning model used by SmartFall, follow these steps:
 
 > ✅ No Java code modification is needed beyond changing the filename in the config.
 
-## 🛠️ [Troubleshooting](#-troubleshootingabc)
+<a name="troubleshootingabc"></a>
+## 🛠️ Troubleshooting
 
 Listing below are the common issues while running the project:
 - If the phone stops transmitting data, you will see “OFF” instead of the data transmitting after clicking Activate. In this case, go to WearOS on the smartphone, please unpair the watch, and pair both the phone and watch again. Make sure you uninstall the app on your phone and watch both before repairing.
