@@ -17,7 +17,7 @@
 - [Adding a New Sensor](#adding-a-new-sensor)
 - [Replacing or Updating the Machine Learning Model](#replacing-or-updating-the-machine-learning-model)
 - [Troubleshooting](#troubleshooting)
-- [Citation](#citation)
+- [Citation](#-citation)
 
 ## 🚀 [Overview](#overview)
 
@@ -150,7 +150,7 @@ Listing below are the common issues while running the project:
 - When you are tracking the prediction values in the log in Android Studio. 
 - Sometimes the prediction value can go high. Typically, it should be between 0 and 1. If it is increasing over time, that means the model has not been loaded properly. Try to do it again from the beginning and run it again on the smartphone.
 
-## 📚 [Citation](#citation)
+## 📚 [Citation](#-citation)
 
 If you use or reference this system in your work, please cite the following paper:
 
