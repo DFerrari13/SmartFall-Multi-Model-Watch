@@ -70,7 +70,7 @@ If your fall detection model is trained to accept **two separate input tensors**
 
 1. Register Both Sensors in `SensorService.java`
     In `onStartCommand()`:
-    ```java
+    ```bash
     sensorManager.registerListener(this,
         sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
         SensorManager.SENSOR_DELAY_FASTEST);
@@ -82,7 +82,7 @@ If your fall detection model is trained to accept **two separate input tensors**
 
 2. Buffer Both Sensor Streams Separately
     In `onSensorChanged()`, maintain two synchronized buffers (e.g., `accBuffer`, `gyroBuffer`) with timestamps:
-    ```
+    ```bash
     if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
         accBuffer.add(new float[]{event.values[0], event.values[1], event.values[2]});
     }
@@ -102,7 +102,7 @@ If your fall detection model is trained to accept **two separate input tensors**
 
 4. Store and Upload Dual-Sensor Data
     Update local JSON logging and upload formatting to include both sensor streams:
-    ```
+    ```bash
     {
       "uuid": "abc123",
       "acc": [[...], [...], ...],
@@ -128,7 +128,7 @@ To update the machine learning model used by SmartFall, follow these steps:
 
 2. Replace the Model File
     If you are using local inference (non-cloud), locate the configuration file in wear (e.g., `wear > java > com.example.wear > config > SmartFallConfig.java`). Update the following field to point to your model file:
-    ```
+    ```bash
     public static final String MODEL_NAME = "your_model.tflite";
     ```
     Place your `.tflite` file in the following directory `wear > assets`. Make sure the filename exactly matches the one set in `MODEL_NAME`.
