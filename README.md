@@ -1,6 +1,12 @@
+<div align="center">
+
 # 📌 SmartFall – Multi-Model Fall Detection with Personalization
 
 🔗 [Visit Project Website](https://smartfall.github.io/)
+
+<img src="https://smartfall.github.io/assets/banners_logos/smartfall-banner.svg" alt="SmartFall Banner" width="600"/>
+
+</div>
 
 ## 🚀 Overview
 
