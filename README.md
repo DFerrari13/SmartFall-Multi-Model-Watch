@@ -8,7 +8,19 @@
 
 </div>
 
-## 🚀 Overview
+## 📚 Table of Contents
+
+- [Overview](#overview)
+- [Installation and Setup](#installation-and-setup)
+- [Daily Workflow: Starting the App](#daily-workflow-starting-the-app)
+- [Usage of Smartwatch with SmartFall](#usage-of-smartwatch-with-smartfall)
+- [Retrieve the Sensed Data from Couchbase](#retrieve-the-sensed-data-from-couchbase)
+- [Configuration](#configuration)
+- [Model Update and Deployment](#model-update-and-deployment)
+- [Adding New Sensors](#adding-new-sensors)
+- [Citation](#citation)
+
+## 🚀 [Overview](#overview)
 
 **SmartFall** is a dual-component Android application built for **real-time fall detection**, user labeling, and data logging using wearable IMU sensors and on-device machine learning.
 
