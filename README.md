@@ -37,7 +37,7 @@ This modular setup enables accurate, on-device fall detection with options for g
 
 A detailed technical description of the SmartFall system architecture can be found in the following PDF:
 
-📄 [smartfall_ecosystem.pdf](pdfs/smartfall_ecosystem.pdf)
+📄 [smartfall_ecosystem_2025.pdf](pdfs/smartfall_ecosystem_2025.pdf)
 
 This document includes:
 1. Introduction: SmartFall System
