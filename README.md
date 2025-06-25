@@ -12,7 +12,7 @@
 
 - [Overview](#-overview)
 - [Prerequisites](#-prerequisites)
-- [SmartFall Ecosystem](#-smartfall-ecosystem)
+- [SmartFall Ecosystem](#-SmartFall-Ecosystem)
 - [Offline Data Storage](#-offline-data-storage)
 - [Adding a New Sensor](#-adding-a-new-sensor)
 - [Replacing or Updating the Machine Learning Model](#-replacing-or-updating-the-machine-learning-model)
@@ -44,7 +44,7 @@ This modular setup enables accurate, on-device fall detection with options for g
 - **WearOS-compatible smartwatch** and **Android phone** with ADB access enabled
 
 
-## ⚙️ [SmartFall Ecosystem](#-smartfall-ecosystem)
+## ⚙️ [SmartFall Ecosystem](#-SmartFall-Ecosystem)
 
 A detailed technical description of the SmartFall system architecture can be found in the following PDF:
 
