@@ -11,13 +11,12 @@
 ## 📚 Table of Contents
 
 - [Overview](#overview)
-- [Installation and Setup](#installation-and-setup)
-- [Daily Workflow: Starting the App](#daily-workflow-starting-the-app)
-- [Usage of Smartwatch with SmartFall](#usage-of-smartwatch-with-smartfall)
-- [Retrieve the Sensed Data from Couchbase](#retrieve-the-sensed-data-from-couchbase)
-- [Configuration](#configuration)
-- [Model Update and Deployment](#model-update-and-deployment)
-- [Adding New Sensors](#adding-new-sensors)
+- [Prerequisites](#prerequisites)
+- [SmartFall Ecosystem](#smartFall-ecosystem)
+- [Offline Data Storage](#Offline-Data-Storage)
+- [Adding a New Sensor](#Adding-a-New-Sensor)
+- [Replacing or Updating the Machine Learning Model](#Replacing-or-Updating-the-Machine-Learning-Model)
+- [Troubleshooting](#troubleshooting)
 - [Citation](#citation)
 
 ## 🚀 [Overview](#overview)
@@ -38,14 +37,14 @@ It comprises two main components:
 
 This modular setup enables accurate, on-device fall detection with options for general or personalized models and dynamic data labeling.
 
-## 🔧 Prerequisites
+## 🔧 [Prerequisites](#prerequisites)
 
 - **Java Development Kit (JDK)**: Version **18** or later  
 - **Android Studio**: Version **Giraffe (2022.3.1)** or later  
 - **WearOS-compatible smartwatch** and **Android phone** with ADB access enabled
 
 
-## ⚙️ SmartFall Ecosystem
+## ⚙️ [SmartFall Ecosystem](#smartFall-ecosystem)
 
 A detailed technical description of the SmartFall system architecture can be found in the following PDF:
 
@@ -61,7 +60,7 @@ This document includes:
 > 💡 Use this document as a reference for deploying, configuring, and maintaining SmartFall across devices and sessions.
 
 
-## 🗃️ Offline Data Storage (Without Couchbase)
+## 🗃️ [Offline Data Storage](#Offline-Data-Storage)
 
 If Couchbase is not configured or the server is unreachable, SmartFall stores sensor and label data locally on the watch as JSON files. These files are saved in the internal app storage or external directory (e.g., `/sdcard/SmartFall/`). You can retrieve them using ADB:
 
@@ -76,7 +75,7 @@ adb shell run-as com.example.smartfallwatch cat files/<filename>.json > output.j
 ```
 Each file contains timestamped IMU data, predictions, confidence scores, and user labels for offline analysis.
 
-## 🧪 Adding a New Sensor (e.g., Gyroscope)
+## 🧪 [Adding a New Sensor](#Adding-a-New-Sensor)
 
 If your fall detection model is trained to accept **two separate input tensors** (e.g., one for accelerometer, one for gyroscope), follow these steps to integrate it into the SmartFall app:
 
@@ -124,7 +123,7 @@ If your fall detection model is trained to accept **two separate input tensors**
 
 > ⚠️ Make sure to retrain or validate the model with your dual-sensor data structure before converting it into a `.tflite` format and deploying it.
 
-## 🔁 Replacing or Updating the Machine Learning Model
+## 🔁 [Replacing or Updating the Machine Learning Model](#Replacing-or-Updating-the-Machine-Learning-Model)
 
 To update the machine learning model used by SmartFall, follow these steps:
 
@@ -143,7 +142,7 @@ To update the machine learning model used by SmartFall, follow these steps:
 
 > ✅ No Java code modification is needed beyond changing the filename in the config.
 
-## Troubleshooting
+## [Troubleshooting](#troubleshooting)
 
 Listing below are the common issues while running the project:
 - If the phone stops transmitting data, you will see “OFF” instead of the data transmitting after clicking Activate. In this case, go to WearOS on the smartphone, please unpair the watch, and pair both the phone and watch again. Make sure you uninstall the app on your phone and watch both before repairing.
@@ -151,7 +150,7 @@ Listing below are the common issues while running the project:
 - When you are tracking the prediction values in the log in Android Studio. 
 - Sometimes the prediction value can go high. Typically, it should be between 0 and 1. If it is increasing over time, that means the model has not been loaded properly. Try to do it again from the beginning and run it again on the smartphone.
 
-## 📚 Citation
+## 📚 [Citation](#citation)
 
 If you use or reference this system in your work, please cite the following paper:
 
