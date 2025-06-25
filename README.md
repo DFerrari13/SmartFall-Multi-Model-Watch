@@ -69,56 +69,51 @@ Each file contains timestamped IMU data, predictions, confidence scores, and use
 If your fall detection model is trained to accept **two separate input tensors** (e.g., one for accelerometer, one for gyroscope), follow these steps to integrate it into the SmartFall app:
 
 1. Register Both Sensors in `SensorService.java`
+    In `onStartCommand()`:
+    ```java
+    sensorManager.registerListener(this,
+        sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+        SensorManager.SENSOR_DELAY_FASTEST);
 
-  In `onStartCommand()`:
-
-  ```java
-  sensorManager.registerListener(this,
-      sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-      SensorManager.SENSOR_DELAY_FASTEST);
-
-  sensorManager.registerListener(this,
-      sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
-      SensorManager.SENSOR_DELAY_FASTEST);
-  ```
+    sensorManager.registerListener(this,
+        sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
+        SensorManager.SENSOR_DELAY_FASTEST);
+    ```
 
 2. Buffer Both Sensor Streams Separately
-  In `onSensorChanged()`, maintain two synchronized buffers (e.g., `accBuffer`, `gyroBuffer`) with timestamps:
-
-  ```
-  if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-      accBuffer.add(new float[]{event.values[0], event.values[1], event.values[2]});
-  }
-
-  if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
-      gyroBuffer.add(new float[]{event.values[0], event.values[1], event.values[2]});
-  }
-  ```
-Make sure both buffers are aligned to the same time window (e.g., 2 seconds with overlapping frames).
+    In `onSensorChanged()`, maintain two synchronized buffers (e.g., `accBuffer`, `gyroBuffer`) with timestamps:
+    ```
+    if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+        accBuffer.add(new float[]{event.values[0], event.values[1], event.values[2]});
+    }
+  
+    if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+        gyroBuffer.add(new float[]{event.values[0], event.values[1], event.values[2]});
+    }
+    ```
+    Make sure both buffers are aligned to the same time window (e.g., 2 seconds with overlapping frames).
 
 3. Prepare Dual Input for TFLite Inference
-  In your prediction module (`PredictionContext.java` or similar), convert both buffers into `ByteBuffer` or `TensorBuffer` objects:
-
-  ```
-  tflite.runForMultipleInputsOutputs(new Object[]{accTensor, gyroTensor}, outputMap);
-
-  ```
-Ensure the model’s input shapes match the expected window dimensions (e.g., `[1, 128, 3]` for each sensor).
+    In your prediction module (`PredictionContext.java` or similar), convert both buffers into `ByteBuffer` or `TensorBuffer` objects:
+    ```
+    tflite.runForMultipleInputsOutputs(new Object[]{accTensor, gyroTensor}, outputMap);
+    ```
+    Ensure the model’s input shapes match the expected window dimensions (e.g., `[1, 128, 3]` for each sensor).
 
 4. Store and Upload Dual-Sensor Data
-  Update local JSON logging and upload formatting to include both sensor streams:
-  ```
-  {
-    "uuid": "abc123",
-    "acc": [[...], [...], ...],
-    "gyro": [[...], [...], ...],
-    "label": "fall",
-    "confidence": 0.92,
-    "timestamp": 1719370000000
-  }
-  ```
+    Update local JSON logging and upload formatting to include both sensor streams:
+    ```
+    {
+      "uuid": "abc123",
+      "acc": [[...], [...], ...],
+      "gyro": [[...], [...], ...],
+      "label": "fall",
+      "confidence": 0.92,
+      "timestamp": 1719370000000
+    }
+    ```
 5. Update PHP and Couchbase Storage (Optional)
-  If uploading to Couchbase, ensure `upsertdocuments.php` accepts and parses both `acc` and `gyro` arrays.
+    If uploading to Couchbase, ensure `upsertdocuments.php` accepts and parses both `acc` and `gyro` arrays.
 
 > ⚠️ Make sure to retrain or validate the model with your dual-sensor data structure before converting it into a `.tflite` format and deploying it.
 
@@ -127,29 +122,22 @@ Ensure the model’s input shapes match the expected window dimensions (e.g., `[
 To update the machine learning model used by SmartFall, follow these steps:
 
 1. Train and Export Your Model
-
-  Train your fall detection model using your preferred framework (e.g., TensorFlow) and export it as a `.tflite` file. Ensure the model:
-  - Accepts the same input shape expected by the app (e.g., accelerometer-only or dual-stream with gyroscope).
-  - Produces classification probabilities or labels compatible with the app’s output processing.
+    Train your fall detection model using your preferred framework (e.g., TensorFlow) and export it as a `.tflite` file. Ensure the model:
+    - Accepts the same input shape expected by the app (e.g., accelerometer-only or dual-stream with gyroscope).
+    - Produces classification probabilities or labels compatible with the app’s output processing.
 
 2. Replace the Model File
-
-  If you are using local inference (non-cloud), locate the configuration file in wear (e.g., `wear > java > com.example.wear > config > SmartFallConfig.java`). Update the following field to point to your model file:
-  ```
-  public static final String MODEL_NAME = "your_model.tflite";
-  ```
-  Place your `.tflite` file in the following directory `wear > assets`:
-
-  Make sure the filename exactly matches the one set in MODEL_NAME.
+    If you are using local inference (non-cloud), locate the configuration file in wear (e.g., `wear > java > com.example.wear > config > SmartFallConfig.java`). Update the following field to point to your model file:
+    ```
+    public static final String MODEL_NAME = "your_model.tflite";
+    ```
+    Place your `.tflite` file in the following directory `wear > assets`. Make sure the filename exactly matches the one set in `MODEL_NAME`.
 
 3. For Cloud-Based Model Download
-  If you are using a cloud-based deployment, upload your `.tflite` file to the server specified in `getCloudConfig().downloadModel`.
-
-  The watch will fetch and use this model dynamically at runtime. Ensure the server is configured to serve the correct `.tflite` file when requested.
+    If you are using a cloud-based deployment, upload your `.tflite` file to the server specified in `getCloudConfig().downloadModel`.
+    The watch will fetch and use this model dynamically at runtime. Ensure the server is configured to serve the correct `.tflite` file when requested.
 
 > ✅ No Java code modification is needed beyond changing the filename in the config.
-
-
 
 ## Troubleshooting
 
