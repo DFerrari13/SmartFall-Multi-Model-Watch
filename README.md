@@ -15,7 +15,7 @@
 
 ## 📚 Table of Contents
 
-- [Overview](#overview)
+- [SmartFall Ecosystem](#overview)
     - [Key Features](#key_features)
     - [Default Model](#default_model)
         - [Example: Convert a Keras Model to TFLite](#covnert_model_tflite)
@@ -28,7 +28,7 @@
 - [Citation](#citation)
 
 <a name="overview"></a>
-## 🚀 Overview
+## 🚀 SmartFall Ecosystem - Overview
 
 <p align="center"> <img src="images/smartfall_ecosystem.png" alt="SmartFall Ecosystem Diagram" width="550"/> </p>
 
