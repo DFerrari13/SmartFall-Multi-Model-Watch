@@ -4,7 +4,7 @@
 
 <img src="https://smartfall.github.io/assets/banners_logos/smartfall-banner.svg" alt="SmartFall Banner" width="800"/>
 
-🔗 [Visit Project Website](https://smartfall.github.io/)
+🔗 [Visit Project Website](https://smartfall.github.io/) | [Paper01](https://dl.acm.org/doi/abs/10.1145/3428666) | [Paper02](https://pubmed.ncbi.nlm.nih.gov/35972790/)
 
 </div>
 
