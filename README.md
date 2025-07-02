@@ -149,7 +149,7 @@ To update the machine learning model used by SmartFall, follow these steps:
 <a name="troubleshootingabc"></a>
 ## 🛠️ Troubleshooting
 
-Listing below are the common issues while running the project:
+The following are the common issues while running the project:
 - If the phone stops transmitting data, you will see “OFF” instead of the data transmitting after clicking Activate. In this case, go to WearOS on the smartphone, please unpair the watch, and pair both the phone and watch again. Make sure you uninstall the app on your phone and watch both before repairing.
 - If you can not see the watch in Android Studio, turn off the ADB debugging and turn it on again.
 - When you are tracking the prediction values in the log in Android Studio. 
@@ -158,24 +158,44 @@ Listing below are the common issues while running the project:
 <a name="citation"></a>
 ## 📚 Citation
 
-If you use or reference this system in your work, please cite the following paper:
+If you use or reference this system in your work, please cite the following papers:
 
-Ngu, A. H., Yasmin, A., Mahmud, T., Mahmood, A., & Sheng, Q. Z. (2024).  
-**Demo: P-Fall: Personalization Pipeline for Fall Detection**.  
-*Proceedings of the 8th ACM/IEEE International Conference on Connected Health: Applications, Systems and Engineering Technologies (CHASE '23)*, pp. 173–174.  
-[https://doi.org/10.1145/3580252.3589412](https://doi.org/10.1145/3580252.3589412)
+> Taylor Mauldin, Anne H. Ngu, Vangelis Metsis, and Marc E. Canby. 2021. Ensemble Deep Learning on Wearables Using Small Datasets. ACM Trans. Comput. Healthcare 2, 1, Article 5 (January 2021), https://doi.org/10.1145/3428666
 ```
-@inproceedings{10.1145/3580252.3589412,
-  author    = {Ngu, Anne H. and Yasmin, Awatif and Mahmud, Tarek and Mahmood, Adnan and Sheng, Quan Z.},
-  title     = {Demo: P-Fall: Personalization Pipeline for Fall Detection},
-  booktitle = {Proceedings of the 8th ACM/IEEE International Conference on Connected Health: Applications, Systems and Engineering Technologies},
-  year      = {2024},
-  pages     = {173--174},
+@article{10.1145/3428666,
+  author = {Mauldin, Taylor and Ngu, Anne H. and Metsis, Vangelis and Canby, Marc E.},
+  title = {Ensemble Deep Learning on Wearables Using Small Datasets},
+  year = {2021},
+  issue_date = {January 2021},
   publisher = {Association for Computing Machinery},
-  location  = {Orlando, FL, USA},
-  doi       = {10.1145/3580252.3589412},
-  url       = {https://doi.org/10.1145/3580252.3589412},
-  keywords  = {fall detection, personalization of ML models, edge computing}
+  address = {New York, NY, USA},
+  volume = {2},
+  number = {1},
+  url = {https://doi.org/10.1145/3428666},
+  doi = {10.1145/3428666},
+  journal = {ACM Trans. Comput. Healthcare},
+  month = December,
+  articleno = {5},
+  numpages = {30}
+}
+```
+
+> Ngu AH, Metsis V, Coyne S, Srinivas P, Salad T, Mahmud U, Chee KH. Personalized Watch-Based Fall Detection Using a Collaborative Edge-Cloud Framework. Int J Neural Syst. 2022 Dec;32(12):2250048. doi: 10.1142/S0129065722500484. Epub 2022 Aug 15. PMID: 35972790.
+```
+@article{Ngu2022FallDetection,
+  author    = {Ngu, Anne Hee and Metsis, Vangelis and Coyne, Shuan and Srinivas, Priyanka and Salad, Tarek and Mahmud, Uddin and Chee, Kyong Hee},
+  title     = {Personalized Watch-Based Fall Detection Using a Collaborative Edge-Cloud Framework},
+  journal   = {International Journal of Neural Systems},
+  volume    = {32},
+  number    = {12},
+  pages     = {2250048},
+  year      = {2022},
+  doi       = {10.1142/S0129065722500484},
+  url       = {https://doi.org/10.1142/S0129065722500484},
+  eprint    = {https://europepmc.org/article/MED/35972790},
+  publisher = {World Scientific},
+  note      = {Epub 2022 Aug 15},
+  pmid      = {35972790}
 }
 ```
 
