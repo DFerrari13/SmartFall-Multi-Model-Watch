@@ -18,6 +18,7 @@
 - [Overview](#overview)
     - [Key Features](#key_features)
     - [Default Model](#default_model)
+        - [Example: Convert a Keras Model to TFLite](#covnert_model_tflite)
     - [Folder Organization](#folder_organization)
 - [Prerequisites](#prerequisites)
 - [Offline Data Storage](#offline-data-storage)
@@ -58,9 +59,31 @@ SmartFall includes a pre-trained deep learning model for real-time fall detectio
 - The model uses only **accelerometer data**, formatted as sequences of shape `(1, 128, 3)` — where `128` is the window size and `3` represents the `x, y, z` axes.
 - It was trained using a `window size of 128` and a `step size of 10`, capturing fine-grained temporal motion features.
 - The model was trained with standard deep learning parameters and then converted into **TensorFlow Lite (TFLite)** format for deployment.
-- The TFLite model is embedded in the `assets/` folder of the `wear/` app, enabling efficient, offline inference directly on the smartwatch.
+- The TFLite model is placed in the `assets/` folder of the `wear/` app, enabling efficient, offline inference directly on the smartwatch.
 
 This default model enables out-of-the-box fall detection and serves as the starting point for later personalization using user-labeled data.
+
+<a name="covnert_model_tflite"></a>
+#### 🔄 Example: Convert a Keras Model to TFLite
+
+You can convert a trained Keras model (`.h5`) to TensorFlow Lite format using the following code:
+
+```python
+import tensorflow as tf
+
+# Load the trained model
+## Works if you saved the model using: model.save('fall_model.h5')>
+model = tf.keras.models.load_model('fall_model.h5') 
+
+# Convert the model to TensorFlow Lite format
+converter = tf.lite.TFLiteConverter.from_keras_model(model)
+converter.optimizations = [tf.lite.Optimize.DEFAULT]
+tflite_model = converter.convert()
+
+# Save the converted model
+with open('fall_model.tflite', 'wb') as f:
+    f.write(tflite_model)
+```
 
 <a name="folder_organization"></a>
 ### 📁 Folder Organization
