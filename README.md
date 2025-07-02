@@ -22,21 +22,22 @@
 <a name="overview"></a>
 ## 🚀 Overview
 
-**SmartFall** is a dual-component Android application built for **real-time fall detection**, user labeling, and data logging using wearable IMU sensors and on-device machine learning.
+<p align="center"> <img src="images/smartfall_ecosystem.png" alt="SmartFall Ecosystem Diagram" width="700"/> </p>
+**SmartFall** is a dual-component Android system designed for real-time fall detection, on-device machine learning, and personalized health monitoring using wearable IMU sensors.
 
-It comprises two main components:
+### 🧠 Key Features
+- Modular System: Includes both a phone controller app and a WearOS smartwatch app.
+- On-Watch Intelligence: Real-time fall detection powered by TensorFlow Lite models.
+- Data Labeling & Logging: Prompts users for ground-truth labels after suspicious events.
+- Model Personalization: Labeled data is analyzed, used to re-train models, and synced back for personalized inference.
+- Seamless Communication: BLE for phone-watch pairing, WiFi and PHP tunnel for syncing with Couchbase DB.
 
-- 📱 **Phone App**  
-  Acts as a controller to initiate and connect to the smartwatch. Minimal UI, primarily for enabling communication.
+> 📘 **Refer to** the full technical documentation [smartfall_ecosystem_2025.pdf](pdfs/smartfall_ecosystem_2025.pdf) for:
+> - System installation and setup  
+> - Daily workflow and app usage  
+> - Smartwatch operation details  
+> - Retrieving sensed data from Couchbase
 
-- ⌚ **Watch App (WearOS)**  
-  Handles all core functions, including:
-  - Continuous IMU data recording
-  - Real-time fall detection using TensorFlow Lite models
-  - User prompts for event labeling
-  - Local storage and synchronization to Couchbase
-
-This modular setup enables accurate, on-device fall detection with options for general or personalized models and dynamic data labeling.
 
 <a name="prerequisites"></a>
 ## 🔧 Prerequisites
@@ -45,21 +46,6 @@ This modular setup enables accurate, on-device fall detection with options for g
 - **Android Studio**: Version **Giraffe (2022.3.1)** or later  
 - **WearOS-compatible smartwatch** and **Android phone** with ADB access enabled
 
-<a name="smartfall-ecosystem"></a>
-## ⚙️ SmartFall Ecosystem
-
-A detailed technical description of the SmartFall system architecture can be found in the following PDF:
-
-📄 [smartfall_ecosystem_2025.pdf](pdfs/smartfall_ecosystem_2025.pdf)
-
-This document includes:
-1. Introduction: SmartFall System
-2. Installation and Setup
-3. Daily Workflow: Starting the App on Phone and Watch
-4. Usage of Smartwatch with SmartFall
-5. Retrieve the Sensed Data from Couchbase
-
-> 💡 Use this document as a reference for deploying, configuring, and maintaining SmartFall across devices and sessions.
 
 <a name="offline-data-storage"></a>
 ## 🗃️ Offline Data Storage (without Couchbase)
