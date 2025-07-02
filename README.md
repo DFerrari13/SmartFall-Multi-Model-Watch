@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📌 SmartFall – Multi-Model Fall Detection with Personalization
+# 📌 SmartFall – Watch-based Application to Detect Falls
 
 <img src="https://smartfall.github.io/assets/banners_logos/smartfall-banner.svg" alt="SmartFall Banner" width="800"/>
 
