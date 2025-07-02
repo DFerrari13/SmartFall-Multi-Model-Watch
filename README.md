@@ -6,7 +6,12 @@
 
 🔗 [Visit Project Website](https://smartfall.github.io/) | [Paper01](https://dl.acm.org/doi/abs/10.1145/3428666) | [Paper02](https://pubmed.ncbi.nlm.nih.gov/35972790/)
 
+<br>
+
+&copy; 2025 SmartFall Research Team. All rights reserved.
+
 </div>
+
 
 ## 📚 Table of Contents
 
