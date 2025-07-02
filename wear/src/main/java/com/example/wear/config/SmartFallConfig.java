@@ -83,26 +83,26 @@ public class SmartFallConfig {
         CloudIPConfig urlPaths = new CloudIPConfig();
         if (ENV_FLAG == "MERCURY") {
             System.out.println("It is Mercury URL Path");
-            urlPaths.checkVersion = "http://eil.cs.txstate.edu/couchbase-prod/checkversion.php";
-            urlPaths.downloadModel = "http://eil.cs.txstate.edu/couchbase-prod/downloadmodels.php";
-            urlPaths.dataUpload = "http://eil.cs.txstate.edu/couchbase-prod/uploadcouch.php";
+            urlPaths.checkVersion = "http://server-name.edu/couchbase-prod/checkversion.php";
+            urlPaths.downloadModel = "http://server-name.edu/couchbase-prod/downloadmodels.php";
+            urlPaths.dataUpload = "http://server-name.edu/couchbase-prod/uploadcouch.php";
         }
         else if (ENV_FLAG == "GANYMEDE") {
             System.out.println("It is Ganymede URL Path");
-            urlPaths.checkVersion = "http://ganymede.cs.txstate.edu/checkversion.php";
-            urlPaths.downloadModel = "http://ganymede.cs.txstate.edu/downloadmodels.php";
-            urlPaths.dataUpload = "http://ganymede.cs.txstate.edu/upsertdocuments.php";
+            urlPaths.checkVersion = "http://server-name.edu/checkversion.php";
+            urlPaths.downloadModel = "http://server-name.edu/downloadmodels.php";
+            urlPaths.dataUpload = "http://server-name.edu/upsertdocuments.php";
         }
         else if (ENV_FLAG == "EUROPA") {
             System.out.println("It is Europa URL Path");
-            urlPaths.checkVersion = " http://eil.cs.txstate.edu/couchbase-dev2/checkversion.php";
-            urlPaths.downloadModel = " http://eil.cs.txstate.edu/couchbase-dev2/downloadmodels.php";
-            urlPaths.dataUpload = " http://eil.cs.txstate.edu/couchbase-dev2/uploadcouch.php";
+            urlPaths.checkVersion = " http://server-name.edu/couchbase-dev2/checkversion.php";
+            urlPaths.downloadModel = " http://server-name.edu/couchbase-dev2/downloadmodels.php";
+            urlPaths.dataUpload = " http://server-name.edu/couchbase-dev2/uploadcouch.php";
         }else if (ENV_FLAG == "SMART_FALL") {
             System.out.println("It is smartfall server URL Path");
-            urlPaths.checkVersion = "https://cssmartfall1.cose.txstate.edu/smartFall/checkversion.php";
-            urlPaths.downloadModel = "https://cssmartfall1.cose.txstate.edu/smartFall/downloadmodels.php";
-            urlPaths.dataUpload = "https://cssmartfall1.cose.txstate.edu/smartFall/upsertdocuments.php";
+            urlPaths.checkVersion = "https://server-name.edu/smartFall/checkversion.php";
+            urlPaths.downloadModel = "https://server-name.edu/smartFall/downloadmodels.php";
+            urlPaths.dataUpload = "https://server-name.edu/smartFall/upsertdocuments.php";
         }
 
         return urlPaths;
