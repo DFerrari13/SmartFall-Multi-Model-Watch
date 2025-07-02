@@ -22,7 +22,7 @@
 <a name="overview"></a>
 ## 🚀 Overview
 
-<p align="center"> <img src="images/smartfall_ecosystem.png" alt="SmartFall Ecosystem Diagram" width="700"/> </p>
+<p align="center"> <img src="images/smartfall_ecosystem.png" alt="SmartFall Ecosystem Diagram" width="550"/> </p>
 **SmartFall** is a dual-component Android system designed for real-time fall detection, on-device machine learning, and personalized health monitoring using wearable IMU sensors.
 
 ### 🧠 Key Features
