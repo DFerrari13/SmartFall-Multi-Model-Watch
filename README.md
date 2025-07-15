@@ -114,7 +114,7 @@ SmartFall-Multi-Model-Watch-main/
 <a name="prerequisites"></a>
 ## 🔧 Prerequisites
 
-- **Java Development Kit (JDK)**: Version **18** or later - can be downloaded from [here]([https://www.oracle.com/java/technologies/downloads/#jdk24-linux](https://www.oracle.com/java/technologies/downloads/)
+- **Java Development Kit (JDK)**: Version **18** or later - can be downloaded from [here](https://www.oracle.com/java/technologies/downloads/)
 - **Android Studio**: Version **Giraffe (2022.3.1)** or later - can be downloaded from [here](https://developer.android.com/studio)
 - **WearOS-compatible smartwatch** and **Android phone** with ADB access enabled:
     - WearOS 3.0+ (API 30+) is recommended for good performance and API support.
