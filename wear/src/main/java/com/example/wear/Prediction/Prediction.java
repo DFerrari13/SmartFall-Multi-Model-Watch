@@ -116,11 +116,20 @@ public class Prediction {
         trueNegativeTimestamps = new ArrayList<>();
         exceededData = new ArrayList<>();
         exceededTimestamps = new ArrayList<>();
-        THRESHOLD = PredictionContext.getThreshold();
+        THRESHOLD = context.getSharedPreferences("Fall_Detection", 0).getFloat("model_threshold", SmartFallConfig.OFFLINE_MODEL_THRESHOLD);
         ALPHA_LIMIT = SmartFallConfig.ALPHA_LIMIT;
         BETA_LIMIT = SmartFallConfig.BETA_LIMIT;
         STEP_SIZE = SmartFallConfig.STEP_SIZE;
         Log.d("Threshold", ""+THRESHOLD);
+    }
+
+    public static boolean isInitialized() {
+        return alphaQueue != null;
+    }
+
+    public static void setThreshold(float threshold, Context context) {
+        THRESHOLD = threshold;
+        context.getSharedPreferences("Fall_Detection", 0).edit().putFloat("model_threshold", threshold).apply();
     }
 
     /**
@@ -129,7 +138,7 @@ public class Prediction {
      * @throws Exception
      */
     public static void makePrediction(Event event) throws Exception {
-
+        if (alphaQueue == null) return;
         float output = 0.0f;
 
         // perform final prediction if the alpha queue surpasses the threshold
@@ -370,13 +379,12 @@ public class Prediction {
             mutableDocument.setString("watch_accelerometer_x", watchX.toString());
             mutableDocument.setString("watch_accelerometer_y", watchY.toString());
             mutableDocument.setString("watch_accelerometer_z", watchZ.toString());
-            if(tracker != null){
+            if(tracker != null && config.trackerId != null){
                 tracker.put("lastDoc", id);
-                if(tracker.getString("firstDoc").equals("null")){
+                if(tracker.optString("firstDoc", "null").equals("null")){
                     tracker.put("firstDoc",id);
                 }
                 Couchbase.updateDocument(config.trackerId+"local",tracker);
-
             }
 
         } catch(Exception e){

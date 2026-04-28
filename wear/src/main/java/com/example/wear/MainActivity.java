@@ -24,10 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.wear.ambient.AmbientMode;
-import androidx.wear.ambient.AmbientModeSupport;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+
 
 import com.example.wear.Database.Database;
 import com.example.wear.Prediction.Prediction;
@@ -36,15 +39,21 @@ import com.example.wear.config.SmartFallConfig;
 import com.example.wear.util.Event;
 import com.google.android.gms.wearable.MessageClient;
 import com.google.android.gms.wearable.WearableListenerService;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.slider.Slider;
+import com.google.android.material.switchmaterial.SwitchMaterial;
+import android.widget.EditText;
+import android.text.TextWatcher;
+import android.text.Editable;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.nio.ByteBuffer;
 import java.sql.Timestamp;
+import java.util.Locale;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity implements //BleServer.OnEventReceivedListener,
-        AmbientModeSupport.AmbientCallbackProvider {
+public class MainActivity extends AppCompatActivity {
 
     /**
      * A string TAG for debugging
@@ -57,10 +66,7 @@ public class MainActivity extends AppCompatActivity implements //BleServer.OnEve
 
     public static boolean feedbackEnabled = true;
 
-    /**
-     *
-     */
-    private AmbientModeSupport.AmbientController ambientController;
+
 
     /**
      *
@@ -118,6 +124,11 @@ public class MainActivity extends AppCompatActivity implements //BleServer.OnEve
     public static final String FEEDBACK_EVENT_PATH = "feedback";
 
     public TextView tv2;
+    private TextView xText, yText, zText, inferenceCountText, thresholdValueText;
+    private SwitchMaterial manualToggle;
+    private Slider thresholdSlider;
+    private EditText targetIpInput;
+    private MaterialButton assitBtn;
 
     /**
      * A list of all declared paths used for sending and receiving ble data
@@ -134,7 +145,14 @@ public class MainActivity extends AppCompatActivity implements //BleServer.OnEve
         initializeAll(getApplicationContext());
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        ambientController = AmbientModeSupport.attach(this);
+
+        // Request Notification Permission for Android 13+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
+            }
+        }
+
 
         String message = UUID.randomUUID().toString();
 
@@ -146,21 +164,68 @@ public class MainActivity extends AppCompatActivity implements //BleServer.OnEve
         editor.putString("uuid", message);
         editor.commit();
 
-        ExtendedFloatingActionButton assitBtn = (ExtendedFloatingActionButton) findViewById(R.id.assitBtn);
-        assitBtn.setText("FELL");
-        assitBtn.setBackgroundColor(Color.RED);
-        assitBtn.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        assitBtn = (MaterialButton) findViewById(R.id.assitBtn);
+        assitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(MainActivity.this, FeedbackActivity.class);
+                startActivity(intent1);
+            }
+        });
 
         tv2 = findViewById(R.id.textView2);
-        tv2.setVisibility(TextView.INVISIBLE);
-        tv2.setText("Deactivated");
-//        assitBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                assitBtn.setText("FELL");
-//                assitBtn.setBackgroundColor(Color.RED);
-//            }
-//        });
+        xText = findViewById(R.id.x_axis);
+        yText = findViewById(R.id.y_axis);
+        zText = findViewById(R.id.z_axis);
+        inferenceCountText = findViewById(R.id.inference_count);
+
+        manualToggle = findViewById(R.id.manualToggle);
+        manualToggle.setOnCheckedChangeListener(new android.widget.CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(android.widget.CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    startMonitoring();
+                } else {
+                    stopMonitoring();
+                }
+            }
+        });
+
+        thresholdValueText = findViewById(R.id.threshold_value_text);
+        thresholdSlider = findViewById(R.id.threshold_slider);
+        
+        // Load initial value
+        float currentThreshold = pref.getFloat("model_threshold", com.example.wear.config.SmartFallConfig.OFFLINE_MODEL_THRESHOLD);
+        thresholdSlider.setValue(currentThreshold);
+        thresholdValueText.setText(String.format(Locale.US, "%.2f", currentThreshold));
+
+        thresholdSlider.addOnChangeListener(new Slider.OnChangeListener() {
+            @Override
+            public void onValueChange(Slider slider, float value, boolean fromUser) {
+                thresholdValueText.setText(String.format(Locale.US, "%.2f", value));
+                Prediction.setThreshold(value, getApplicationContext());
+            }
+        });
+
+        targetIpInput = findViewById(R.id.target_ip_input);
+        String savedIp = pref.getString("target_ip", "10.205.203.251");
+        com.example.wear.util.UdpClient.TARGET_IP = savedIp;
+        targetIpInput.setText(savedIp);
+
+        targetIpInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String ip = s.toString().trim();
+                com.example.wear.util.UdpClient.TARGET_IP = ip;
+                pref.edit().putString("target_ip", ip).apply();
+            }
+        });
 
         IntentFilter messageFilter = new IntentFilter(Intent.ACTION_SEND);
         MessageReceiver messageReceiver = new MessageReceiver();
@@ -189,7 +254,34 @@ public class MainActivity extends AppCompatActivity implements //BleServer.OnEve
 
     }
 
-    public static void  initializeAll(Context context){
+
+    private void startMonitoring() {
+        feedbackEnabled = true;
+        initializeAll(getApplicationContext());
+        sensorIntent = new Intent(MainActivity.this, SensorService.class);
+        ContextCompat.startForegroundService(MainActivity.this, sensorIntent);
+        tv2.setText("ACTIVATED");
+        tv2.setTextColor(getResources().getColor(R.color.status_active));
+        if (!manualToggle.isChecked()) {
+            manualToggle.setChecked(true);
+        }
+    }
+
+    private void stopMonitoring() {
+        feedbackEnabled = false;
+        Prediction.uploadTracker(context);
+        if (sensorIntent != null) {
+            stopService(sensorIntent);
+        }
+        Prediction.reset();
+        tv2.setText("DEACTIVATED");
+        tv2.setTextColor(getResources().getColor(R.color.status_standby));
+        if (manualToggle.isChecked()) {
+            manualToggle.setChecked(false);
+        }
+    }
+
+    public void  initializeAll(Context context){
         try {
             /** Database **/
             Database.initialize(context);
@@ -207,6 +299,8 @@ public class MainActivity extends AppCompatActivity implements //BleServer.OnEve
             Prediction.updateTracker(context);
         } catch (Exception e){
             e.printStackTrace();
+            tv2.setText("MODEL ERROR");
+            tv2.setTextColor(getResources().getColor(R.color.status_standby));
         }
 
     }
@@ -217,27 +311,7 @@ public class MainActivity extends AppCompatActivity implements //BleServer.OnEve
         super.onDestroy();
     }
 
-    @Override
-    public AmbientModeSupport.AmbientCallback getAmbientCallback() {
-        return new MyAmbientCallback();
-    }
 
-    private class MyAmbientCallback extends AmbientModeSupport.AmbientCallback {
-        @Override
-        public void onEnterAmbient(Bundle ambientDetails) {
-            // Handle entering ambient mode
-        }
-
-        @Override
-        public void onExitAmbient() {
-            // Handle exiting ambient mode
-        }
-
-        @Override
-        public void onUpdateAmbient() {
-            // Update the content
-        }
-    }
 
 
     // Register the local broadcast receiver to receive messages from the listener.
@@ -261,20 +335,10 @@ public class MainActivity extends AppCompatActivity implements //BleServer.OnEve
             }
             else {
                 if(message.equals("on")) {
-                    feedbackEnabled = true;
-                    initializeAll(getApplicationContext());
-                    sensorIntent = new Intent(MainActivity.this, SensorService.class );
-                    ContextCompat.startForegroundService(MainActivity.this, sensorIntent);
-                    tv2.setText("Activated");
-                    tv2.setVisibility(TextView.VISIBLE);
+                    startMonitoring();
                 }
                 else {
-                    feedbackEnabled = false;
-                    Prediction.uploadTracker(context);
-                    stopService(sensorIntent);
-                    Prediction.reset();
-                    tv2.setText("Deactivated");
-                    tv2.setVisibility(TextView.INVISIBLE);
+                    stopMonitoring();
                 }
             }
         }
@@ -284,9 +348,21 @@ public class MainActivity extends AppCompatActivity implements //BleServer.OnEve
         @Override
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("message");
-//            Log.v(TAG, "Main activity received message: " + message);
-
-            tv2.setText(message);
+            if (message != null) {
+                String[] parts = message.split(",");
+                if (parts.length >= 3) {
+                    try {
+                        xText.setText(String.format(Locale.US, "%.2f", Float.parseFloat(parts[0])));
+                        yText.setText(String.format(Locale.US, "%.2f", Float.parseFloat(parts[1])));
+                        zText.setText(String.format(Locale.US, "%.2f", Float.parseFloat(parts[2])));
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (parts.length >= 4) {
+                    inferenceCountText.setText(parts[3]);
+                }
+            }
         }
     }
 

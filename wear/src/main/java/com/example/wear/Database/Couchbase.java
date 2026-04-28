@@ -151,6 +151,8 @@ public class Couchbase {
                         mutableArray.insertValue(i, element);
                     }
                     mutableDocument.setArray(key, mutableArray);
+                } else if (value == JSONObject.NULL) {
+                    mutableDocument.setValue(key, null);
                 } else
                     mutableDocument.setValue(key, value);
             }

@@ -32,7 +32,7 @@ public class SmartFallConfig {
      */
 //    public static final String MODEL_FROM  = "ONLINE";
     public static final String MODEL_FROM  = "OFFLINE";
-    public static final String OFFLINE_MODEL_FILE  = "saved_model128.tflite"; // file name in assets folder
+    public static final String OFFLINE_MODEL_FILE  = "transformer_smartfall_s128.tflite"; // file name in assets folder
     public static final float OFFLINE_MODEL_THRESHOLD  = 0.9f;
     /**
      * This is the key that holds the information about which remote server has to be accessed.

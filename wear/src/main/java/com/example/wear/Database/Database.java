@@ -96,6 +96,22 @@ public class Database {
     public static void insertDocument(MutableDocument document) throws JSONException, CouchbaseLiteException, IOException {
 
         if (document.getString("type").equals("???")) {
+            // Extract the exact timestamp of the fall from the sensor data
+            long fallTimeMs = System.currentTimeMillis(); // fallback
+            try {
+                String timestampsStr = document.getString("timestamp");
+                if (timestampsStr != null && !timestampsStr.isEmpty()) {
+                    String[] timestamps = timestampsStr.split(",");
+                    // Use the middle or end of the window as the exact fall time. Let's use the end.
+                    fallTimeMs = Long.parseLong(timestamps[timestamps.length - 1]);
+                }
+            } catch (Exception e) {
+                // Ignore and use fallback
+            }
+
+            // Send UDP fall detection signal to the Python dashcam
+            com.example.wear.util.UdpClient.sendFallSignal(fallTimeMs);
+            
             Intent messageIntent = new Intent("FeedbackIntent");
             LocalBroadcastManager.getInstance(context).sendBroadcast(messageIntent);
             documentIdQueue.add(Couchbase.insertDocument(document));

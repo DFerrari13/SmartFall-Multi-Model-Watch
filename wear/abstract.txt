@@ -1,0 +1,25 @@
+Title: A Dual-Layer Fall Detection and Analysis System: Integrating Wearable Triggering with Vision-Based Kinematic and Semantic Evaluation
+
+Abstract:
+Fall detection systems are critical for elderly care and safety monitoring, yet they face a persistent trade-off between computational efficiency and diagnostic accuracy. Accelerometer-based wearable systems offer low-power, continuous monitoring but suffer from high false-positive rates due to the inability to distinguish between actual falls and daily activities. Conversely, direct computer vision analysis is robust but computationally prohibitive for continuous, real-time deployment. This project proposes a hybrid "Dashcam-for-Falls" architecture that decouples detection from analysis. We leverage the lightweight SmartFall wearable system to monitor movement in real-time. Upon detecting an anomalous event, the system triggers a Python-based peripheral controller that extracts a localized video clip from a continuous circular buffer, capturing the exact temporal window of the incident without requiring high-power, constant video processing.
+
+Once the event is captured, the system provides two distinct pathways for advanced forensic analysis. First, we employ a monocular motion capture approach utilizing SAM-3D Body to extract human kinematics, enabling dynamic simulations in biomechanical environments like OpenSim for injury risk assessment. Second, we evaluate the utility of Large Multimodal Models (LMMs) as a semantic verification layer. By querying the captured video with structured prompts, we assess the LMM’s ability to discriminate between accidental falls and controlled movements, such as sitting down, while simultaneously extracting metadata regarding impact dynamics (e.g., head impact, use of protective arms). This dual-layer approach effectively solves the resource-efficiency challenge of continuous video monitoring while providing high-fidelity data suitable for clinical review or biomechanical research.
+
+Tips for your Presentation/Paper
+Since you have two distinct "post-processing" methods (Kinematic vs. LMM Semantic), you are effectively positioning this project as a Decision Support System. Here is how to organize those two sections in your work:
+
+1. The "Why" behind the two methods:
+The Kinematic approach (SAM-3D Body + OpenSim): Frame this as Quantitative/Biomechanical. It answers the question: "How much force was applied to the joints/skeleton, and what is the risk of fracture?" This is for medical doctors, physical therapists, and researchers.
+The LMM approach (Video-to-JSON): Frame this as Qualitative/Diagnostic. It answers the question: "Did a fall actually occur, and what were the contextual circumstances (e.g., slipped, tripped, pushed)?" This is for the automated alert system to reduce false alarms.
+2. Strengthening your Methodology section (The "Test" Phase):
+Since you mentioned testing this over 30 videos, ensure you report these specific metrics for the LMM portion:
+
+Precision/Recall: How often did the LMM correctly identify a "controlled sit" vs. an "actual fall"?
+Confidence Calibration: Does the LMM ever get "confused" by the virtual avatar's lighting or movement speed?
+Hallucination Rate: Does the LMM ever report an impact (like a head strike) that didn't happen in the animation?
+3. Keywords you might want to include:
+Edge-Triggered Vision
+Asynchronous Event Extraction
+Kinematic Reconstruction
+Semantic Fall Verification
+Multimodal Fall Analysis

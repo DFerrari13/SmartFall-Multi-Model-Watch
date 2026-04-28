@@ -20,7 +20,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.wear.ambient.AmbientModeSupport;
 
 import com.example.wear.Database.Database;
 import com.example.wear.Prediction.Prediction;
@@ -37,7 +36,7 @@ import java.util.concurrent.ExecutionException;
 
 //import edu.txstate.reu.ble.BluetoothLe;
 
-public class FeedbackActivity extends AppCompatActivity implements AmbientModeSupport.AmbientCallbackProvider {
+public class FeedbackActivity extends AppCompatActivity {
 
     private static final long START_IN_MILLIS = 300000;          //300 seconds
     private final static String TAG = "Feedback Activity";
@@ -45,7 +44,7 @@ public class FeedbackActivity extends AppCompatActivity implements AmbientModeSu
     private CountDownTimer mcountDownTimer;                     //Actual timer
     private long timeLeftInMilliseconds = START_IN_MILLIS;
     private static Intent helpAlertIntent = null;
-    private AmbientModeSupport.AmbientController ambientController;
+
     TextView countdownText;
     MediaPlayer player;
 
@@ -55,9 +54,9 @@ public class FeedbackActivity extends AppCompatActivity implements AmbientModeSu
         setContentView(R.layout.activity_feedback);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        ambientController = AmbientModeSupport.attach(this);
+
         Log.d(TAG, "onCreate: ");
-        mTextView = (TextView) findViewById(R.id.text);
+        mTextView = (TextView) findViewById(R.id.textView);
 
         // Get the feedback buttons
         Button yesBtn = (Button) findViewById(R.id.feedback_yes_btn);
@@ -164,27 +163,7 @@ public class FeedbackActivity extends AppCompatActivity implements AmbientModeSu
         }.start();
     }
 
-    @Override
-    public AmbientModeSupport.AmbientCallback getAmbientCallback() {
-        return new FeedbackActivity.MyAmbientCallback();
-    }
 
-    private class MyAmbientCallback extends AmbientModeSupport.AmbientCallback {
-        @Override
-        public void onEnterAmbient(Bundle ambientDetails) {
-            // Handle entering ambient mode
-        }
-
-        @Override
-        public void onExitAmbient() {
-            // Handle exiting ambient mode
-        }
-
-        @Override
-        public void onUpdateAmbient() {
-            // Update the content
-        }
-    }
 
     class SendThread extends Thread {
         String path;

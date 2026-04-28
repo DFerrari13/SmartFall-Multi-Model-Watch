@@ -10,13 +10,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.wear.ambient.AmbientModeSupport;
 
-public class HelpActivity extends AppCompatActivity implements AmbientModeSupport.AmbientCallbackProvider {
+public class HelpActivity extends AppCompatActivity {
 
 
     private final static String TAG = "HelpActivity";
-    private AmbientModeSupport.AmbientController ambientController;
+
 
     private TextView mTextView;
 
@@ -25,7 +24,7 @@ public class HelpActivity extends AppCompatActivity implements AmbientModeSuppor
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        ambientController = AmbientModeSupport.attach(this);
+
         // Get the feedback buttons
         Button okBtn = (Button) findViewById(R.id.help_ok_btn);
 
@@ -39,25 +38,5 @@ public class HelpActivity extends AppCompatActivity implements AmbientModeSuppor
 
     }
 
-    @Override
-    public AmbientModeSupport.AmbientCallback getAmbientCallback() {
-        return new HelpActivity.MyAmbientCallback();
-    }
 
-    public static class MyAmbientCallback extends AmbientModeSupport.AmbientCallback {
-        @Override
-        public void onEnterAmbient(Bundle ambientDetails) {
-            // Handle entering ambient mode
-        }
-
-        @Override
-        public void onExitAmbient() {
-            // Handle exiting ambient mode
-        }
-
-        @Override
-        public void onUpdateAmbient() {
-            // Update the content
-        }
-    }
 }

@@ -57,7 +57,7 @@ public class SensorService extends Service implements SensorEventListener {
             public void run(){
                 if(mmSensorValues!=null) {
                     Intent messageIntent = new Intent("data-receiver");
-                    messageIntent.putExtra("message", mmSensorValues[1]+"");
+                    messageIntent.putExtra("message", mmSensorValues[0] + "," + mmSensorValues[1] + "," + mmSensorValues[2] + "," + com.example.wear.Prediction.Prediction.num_pred);
                     LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(messageIntent);
 
                     ByteBuffer buffer = ByteBuffer.allocate(4 * mmSensorValues.length);
@@ -96,7 +96,7 @@ public class SensorService extends Service implements SensorEventListener {
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                0, notificationIntent, 0);
+                0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
         Notification notification = new NotificationCompat.Builder(this, "ForegroundServiceChannel")
                 .setContentTitle("Foreground Service")

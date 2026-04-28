@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.wear.ambient.AmbientModeSupport;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -24,13 +23,13 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
-public class HelpAlertActivity extends AppCompatActivity implements AmbientModeSupport.AmbientCallbackProvider {
+public class HelpAlertActivity extends AppCompatActivity {
     public static String datapath = "/user/uuid";
     String DATA_TAG = "Mobile MainActivity";
     protected Handler handler;
 
     private final static String TAG = "HelpAlertActivity";
-    private AmbientModeSupport.AmbientController ambientController;
+
     private static Intent helpintent = null;
     private TextView mTextView;
 
@@ -39,10 +38,10 @@ public class HelpAlertActivity extends AppCompatActivity implements AmbientModeS
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert);
 
-        mTextView = (TextView) findViewById(R.id.text);
+        mTextView = (TextView) findViewById(R.id.textView);
         helpintent = new Intent(this, HelpActivity.class);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        ambientController = AmbientModeSupport.attach(this);
+
         // Get the feedback buttons
         Button yesBtn = (Button) findViewById(R.id.help_yes_btn);
         Button noBtn = (Button) findViewById(R.id.help_no_btn);
@@ -75,27 +74,7 @@ public class HelpAlertActivity extends AppCompatActivity implements AmbientModeS
 
     }
 
-    @Override
-    public AmbientModeSupport.AmbientCallback getAmbientCallback() {
-        return new HelpActivity.MyAmbientCallback();
-    }
 
-    public static class MyAmbientCallback extends AmbientModeSupport.AmbientCallback {
-        @Override
-        public void onEnterAmbient(Bundle ambientDetails) {
-            // Handle entering ambient mode
-        }
-
-        @Override
-        public void onExitAmbient() {
-            // Handle exiting ambient mode
-        }
-
-        @Override
-        public void onUpdateAmbient() {
-            // Update the content
-        }
-    }
 
     //This actually sends the message to the wearable device.
     class SendThread extends Thread {
